@@ -1,3 +1,9 @@
+body{
+  margin: 0px;
+  padding: 0px;
+}
+
+
 .node {
   cursor: pointer;
 }
@@ -14,7 +20,7 @@
 .label {
   font: 1em "Helvetica Neue Bold", Helvetica, Arial, sans-serif;
   color: #306468;
-  font-weight: bold;
+  line-height: 20px;
   /* text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff; */
 }
 
@@ -32,4 +38,29 @@ circle:hover{
 g{
   margin: 0 auto;
   display: block;
+}
+
+svg {
+  margin-top: -10%;
+}
+
+.about {
+  font-family: sans-serif;
+  color: #585A5C;
+  width: 30%;
+  padding-top: 80px;
+  padding-left: 20px;
+}
+
+.top img{
+  padding-left: 20px;
+  padding-top: 10px;
+  width: 75px;
+ }
+
+.top{
+  background: #222222;
+  height: 80px;
+  width: 100%;
+  /* border-bottom: 1px solid black; */
 }
