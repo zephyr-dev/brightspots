@@ -1,7 +1,7 @@
 $(document).ready(function() {
   var margin = 10;
-  var diameter= 620;
-  var svgWidth = 700 
+  var diameter= 700;
+  var svgWidth = 700; 
 
   var color = d3.scale.linear()
   .domain([-1,5])
@@ -11,8 +11,8 @@ $(document).ready(function() {
 
   var svg= d3.select("body").append("svg")
   .attr("viewBox","0 0 1200 1200")
-    .attr("perserveAspectRatio","xMinYMid")
-    .attr("width", svgWidth)
+  .attr("perserveAspectRatio","xMinYMid")
+  .attr("width", svgWidth)
   .attr("height", diameter)
   .append("g")
   .attr("transform", "translate(" + diameter + ", " + diameter/2 + ")")
