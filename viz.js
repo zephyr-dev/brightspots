@@ -10,7 +10,7 @@ $(document).ready(function() {
 
 
   var svg= d3.select("body").append("svg")
-  .attr("viewBox","0 0 1200 1200")
+  .attr("viewBox","0 0 1200 900")
   .attr("perserveAspectRatio","xMinYMid")
   .attr("width", svgWidth)
   .attr("height", diameter)
@@ -34,7 +34,8 @@ $(document).ready(function() {
     .enter()
     .append("circle")
     .attr("class", function(d){return setClass(d);})
-    .style("fill",function(d){return d.children ? color(d.depth) : '#BDFCFF';})
+    .style("fill",function(d){return d.children ? color(d.depth) : '#006880';})
+    .style("fill", function(d) { return setColor(d)})
     .on("click", function(d){ if (focus !== d) zoom(d), d3.event.stopPropagation();})
 
     function setClass(d) {
@@ -52,6 +53,24 @@ $(document).ready(function() {
         }
       } else {
         return "node node--root"
+      }
+    }
+
+    function setColor(d) {
+      if (d.parent) {
+        if (d.depth == 1) {
+          return "#b6dce5"
+        } else if (d.depth == 2) {
+          if (d.children) {
+            return "#e6f3f6"
+          } else {
+            return "#f3f9fb"
+          }
+        } else {
+          return "#f3f9fb"
+        }
+      } else {
+        return "#0c8caa"
       }
     }
 
@@ -94,56 +113,63 @@ $(document).ready(function() {
       .filter(function(d){return d.parent ===focus || this.style.display === "inline";})
       .style("fill-opacity", function(d) {return d.parent === focus ? 1:0})
       .each("start",function(d){if (d.parent === focus) this.style.display = "inline"; if (d.parent !== focus) this.style.display = "none"})
-      .each("end",function(d){if (d.parent !== focus) this.style.display = "none"; if (d.parent == focus) this.style.display = "inline"})
+        .each("end",function(d){if (d.parent !== focus) this.style.display = "none"; if (d.parent == focus) this.style.display = "inline"})
     }
 
-    function zoom(d){
-      var focus0 = focus;
-      var focus =d;
+function zoom(d){
+  var focus0 = focus;
+  var focus =d;
 
-      var transition = d3.transition()
-      .duration(700)
-      .tween("zoom",function(d){
-        var i= d3.interpolateZoom(view,[focus.x,focus.y,focus.r *2 + margin]);
-        return function (t){zoomTo(i(t));};
-      });
+  var transition = d3.transition()
+  .duration(700)
+  .tween("zoom",function(d){
+    var i= d3.interpolateZoom(view,[focus.x,focus.y,focus.r *2 + margin]);
+    return function (t){zoomTo(i(t));};
+  });
 
-      console.log("Zoom");
-      transition.selectAll("circle")
-      .filter(function(d){ return d.parent ===focus || this.style.display === "inline";})
-      .style("fill-opacity", function(d) {return (d.parent === focus) ? 1:0})
-      .each("start",function(d){if (d.parent === focus) this.style.display = "inline";})
-      .each("end",function(d){if (d.parent !== focus ) this.style.display = "none";})
+  console.log("Zoom");
+  transition.selectAll("circle")
+  .filter(function(d){ return d.parent ===focus || this.style.display === "inline";})
+  .style("fill-opacity", function(d) {return (d.parent === focus) ? 1:0})
+  .each("start",function(d){if (d.parent === focus) this.style.display = "inline";})
+  .each("end",function(d){if (d.parent !== focus ) this.style.display = "none";})
 
-      transition.selectAll(".label")
-      .filter(function(d){return d.parent ===focus || this.style.display === "inline";})
-      .each("start",function(d){if (d.parent === focus) this.style.display = "none"; if (d.parent !== focus) this.style.display = "none";})
-      .each("end",function(d){if (d.parent === focus) this.style.display = "inline"; if (d.parent !== focus) this.style.display = "none";})
-    }
+  transition.selectAll(".label")
+  .filter(function(d){return d.parent ===focus || this.style.display === "inline";})
+  .each("start",function(d){if (d.parent === focus) this.style.display = "none"; if (d.parent !== focus) this.style.display = "none";})
+  .each("end",function(d){if (d.parent === focus) this.style.display = "inline"; if (d.parent !== focus) this.style.display = "none";})
+}
 
-    function zoomTo(v){
+function zoomTo(v){
 
-      var k = diameter /v[2]; view =v;
-      circle_nodes.attr("transform", function (d){ return "translate(" + (d.x-v[0]) * k + "," + (d.y - v[1]) * k + ")" })
-      circle.attr("r",function(d){return d.r *k});
-      text_nodes.attr("width", function(d) {return d.r *k *2});
-      text_nodes.attr("height", function(d) {return d.r *k *2});
-      text_nodes.attr("x", function(d) { return ((d.x-v[0]) * k) - (d.r *k) });
-      text_nodes.attr("y", function(d) { return ((d.y - v[1]) * k) -15});
-      text_nodes.attr("fill", "red");
-    }
+  var k = diameter /v[2]; view =v;
+  circle_nodes.attr("transform", function (d){ return "translate(" + (d.x-v[0]) * k + "," + (d.y - v[1]) * k + ")" })
+  circle.attr("r",function(d){return d.r *k});
+  text_nodes.attr("width", function(d) {return d.r *k *2});
+  text_nodes.attr("height", function(d) {return d.r *k *2});
+  text_nodes.attr("x", function(d) { return ((d.x-v[0]) * k) - (d.r *k) });
+  text_nodes.attr("y", function(d) { return ((d.y - v[1]) * k) -15});
+}
 
-    // d3.select(self.frameElement).style("height",diameter + "px");
+//hides and shows about text
+$("circle").on("click", function(){
+  $(".about").hide();
+})
 
-    var chart = $("svg"),
-    aspect = chart.width() / chart.height(),
-    container = chart.parent();
+$("svg").on("click", function(){
+  $(".about").show();
+})
 
-    $(window).on("resize", function() {
-      var targetWidth = container.width();
-      chart.attr("width", targetWidth);
-      chart.attr("height", Math.round(targetWidth / aspect));
-    }).trigger("resize");
+//creates responsive size
+var chart = $("svg"),
+aspect = chart.width() / chart.height(),
+container = chart.parent();
+
+$(window).on("resize", function() {
+  var targetWidth = container.width();
+  chart.attr("width", targetWidth);
+  chart.attr("height", Math.round(targetWidth / aspect));
+}).trigger("resize");
 
   });
 });

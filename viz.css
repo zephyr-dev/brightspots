@@ -32,7 +32,7 @@ body{
 
 circle:hover{
   stroke: white;
-  stroke-width: 10px;
+  stroke-width: 12px;
 }
 
 g{
@@ -41,7 +41,7 @@ g{
 }
 
 svg {
-  margin-top: -10%;
+  background-color: #f5f4f0;
 }
 
 .about {
@@ -50,19 +50,19 @@ svg {
   width: 30%;
   padding-top: 80px;
   padding-left: 20px;
+  position: fixed;
+  top: 10px;
+  left: 10px;
 }
 
 .top img{
-  padding-left: 20px;
-  padding-top: 10px;
-  width: 75px;
+  position: fixed;
+  top: 10px;
+  left: 16px;
+  width: 100px;
  }
 
-.top{
-  background: #222222;
-  height: 80px;
-  width: 100%;
-  /* border-bottom: 1px solid black; */
+ .node--leaf{
+  opacity: .5;
 }
-
 
