@@ -1,7 +1,7 @@
 $(document).ready(function() {
   var margin = 10;
-  var diameter= $(window).innerWidth()/2;
-  var svgWidth = $(window).innerWidth(); 
+  var diameter= 620;
+  var svgWidth = 700 
 
   var color = d3.scale.linear()
   .domain([-1,5])
@@ -10,10 +10,12 @@ $(document).ready(function() {
 
 
   var svg= d3.select("body").append("svg")
-  .attr("width", svgWidth)
+  .attr("viewBox","0 0 1200 1200")
+    .attr("perserveAspectRatio","xMinYMid")
+    .attr("width", svgWidth)
   .attr("height", diameter)
   .append("g")
-  .attr("transform", "translate(" + diameter + ", " + diameter/2 + ")");
+  .attr("transform", "translate(" + diameter + ", " + diameter/2 + ")")
 
 
   var pack= d3.layout.pack()
@@ -131,7 +133,17 @@ $(document).ready(function() {
       text_nodes.attr("fill", "red");
     }
 
-    d3.select(self.frameElement).style("height",diameter + "px");
+    // d3.select(self.frameElement).style("height",diameter + "px");
+
+    var chart = $("svg"),
+    aspect = chart.width() / chart.height(),
+    container = chart.parent();
+
+    $(window).on("resize", function() {
+      var targetWidth = container.width();
+      chart.attr("width", targetWidth);
+      chart.attr("height", Math.round(targetWidth / aspect));
+    }).trigger("resize");
 
   });
 });
