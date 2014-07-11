@@ -1,7 +1,9 @@
 $(document).ready(function() {
+  window.document.location.assign("/#openModal");
+
   var margin = 10;
   var diameter= 700;
-  var svgWidth = 700; 
+  var svgWidth = 700;
 
   var color = d3.scale.linear()
   .domain([-1,5])
@@ -10,7 +12,7 @@ $(document).ready(function() {
 
 
   var svg= d3.select("body").append("svg")
-  .attr("viewBox","0 0 1200 900")
+  .attr("viewBox","75 130 1200 900")
   .attr("perserveAspectRatio","xMinYMid")
   .attr("width", svgWidth)
   .attr("height", diameter)
@@ -62,7 +64,7 @@ $(document).ready(function() {
           return "#b6dce5"
         } else if (d.depth == 2) {
           if (d.children) {
-            return "#e6f3f6"
+            return "#f3f9fb"
           } else {
             return "#f3f9fb"
           }
@@ -74,11 +76,33 @@ $(document).ready(function() {
       }
     }
 
+    function setTextColor(d) {
+      if (d.parent) {
+        if (d.depth == 1) {
+          // return "#0c8caa"
+          return "label label-top-level"
+        } else if (d.depth == 2) {
+          if (d.children) {
+            return "label label-middle-level"
+            // return "#e6f3f6"
+          } else {
+            return "label"
+            // return "#f3f9fb"
+          }
+        } else {
+          return "label"
+          // return "#f3f9fb"
+        }
+      } else {
+        return "label label-top-level"
+      }
+    }
+
     var text= svg.selectAll("foreignObject")
     .data(nodes)
     .enter().append("foreignObject")
     .html(function(d){return d.name})
-    .attr("class","label")
+    .attr("class", function(d) { return setTextColor(d)})
     .style("fill-opacity", function(d) {return d.parent === tree ? 1 :0; })
     .style("text-align", "center")
     .style("display",function(d){return d.parent === tree ? "inline" : "none";});
@@ -87,7 +111,6 @@ $(document).ready(function() {
     var circle_nodes= svg.selectAll("circle")
 
     d3.select("body")
-    .style("background",color(-1))
     .on("click",function(){backgroundZoom(tree);});
 
     zoomTo([tree.x,tree.y,tree.r*2  + margin])
