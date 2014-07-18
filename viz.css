@@ -8,6 +8,11 @@ body{
   cursor: pointer;
 }
 
+#gustLogo {
+  margin-top: 80px;
+  margin-bottom: 0px;
+}
+
 .node--middle {
   display: none;
 }
@@ -75,16 +80,24 @@ svg {
 }
 
 #openModal h2{
-  font-size: 10em;
-  color: #0B799A;
+  font-size: 7em;
+  margin-top: 55px;
+  margin-bottom: 80px;
+  font-weight: 400;
+  color: #555;
+  /* background: -webkit-linear-gradient(left, #4FBB7A, #45AEC3); */
+  /* -webkit-background-clip: text; */
+  /* -webkit-text-fill-color: transparent; */
 }
 
 .close {
   border-radius: 3px;
-  padding: 10px 30px;
-  background-color: #0B799A;
+  padding: 20px 40px;
+  margin-top: 30px;
+  background-color: #4FBB7A;
   color: white;
   text-decoration: none;
+  font-size: 2em;
 }
 
 .close:hover {
