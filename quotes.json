@@ -1,0 +1,6 @@
+{
+  "quotes": [
+    { "quote": "foobar", "first": true},
+    { "quote": "poop", "first": false}
+  ]
+}

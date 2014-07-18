@@ -102,7 +102,7 @@ svg {
   /* -webkit-text-fill-color: transparent; */
 }
 
-.close {
+.triggerModal {
   border-radius: 3px;
   padding: 20px 40px;
   margin-top: 30px;
@@ -112,7 +112,7 @@ svg {
   font-size: 2em;
 }
 
-.close:hover {
+.triggerModal:hover {
   background-color: #A7D4DF;
 }
 
@@ -138,6 +138,41 @@ svg {
   opacity:1;
   pointer-events: auto;
 }
+
+#dismissModal {
+  float: right;
+}
+
+#dismissModal:after {
+}
+
+.modalDialog#carouselModal > div {
+  border-radius: 25px;
+  margin-left: -700px;
+  left: 50%;
+  top: 50%;
+  height: 500px;
+  width: 1400px;
+  margin-top: -250px;
+  position: absolute;
+  padding: 5px 20px 13px 20px;
+  background: #45AEC3;
+  color: white;
+  font-size: 5em;
+}
+
+#launchQuotes {
+  padding: 10px;
+}
+
+.item > p:before {
+  content: "\201C"
+}
+
+.item > p:after {
+  content: "\201D"
+}
+
 
 .modalDialog > div {
   width: 100%;

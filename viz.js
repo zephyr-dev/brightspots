@@ -1,4 +1,24 @@
 $(document).ready(function() {
+  d3.json("quotes.json", function(error, json){
+    var json = json.quotes
+    var container = d3.select("#quotesContainer")
+    container.selectAll(".item").
+      data(json).
+      enter().
+      append("div").
+      attr('class', setItemClass).
+      append("p").
+      text(function(d) { return d.quote });
+  });
+
+  function setItemClass(node) {
+    if (node.first) {
+      return("item active");
+    } else {
+      return("item");
+    }
+  }
+
   window.document.location.assign("/#openModal");
 
   var margin = 10;
